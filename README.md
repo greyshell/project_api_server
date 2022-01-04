@@ -3,4 +3,4 @@
 ### Develop a API Server
 
 #### Tuesday
-- create the foundation, virtual env, git branch
+- create the foundation, virtual env using pyenv, git branch

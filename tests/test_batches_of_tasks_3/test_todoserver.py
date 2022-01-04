@@ -59,3 +59,4 @@ class TestTodoserver(unittest.TestCase):
         self.assertEqual(200, resp.status_code)
         checked_tasks = json_body(resp)
         self.assertEqual(3, len(checked_tasks))
+
