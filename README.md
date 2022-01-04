@@ -6,7 +6,7 @@
 2. Development Set-up => done
    - create the foundation, virtual env using pyenv, git branch
 3. The First Endpoint => done
-4. Creating & Fetching A Task =>
+4. Creating & Fetching A Task => done
 5. Batches of Tasks
 6. Application Structure: Refactoring & Organizing
 7. Using the Database
