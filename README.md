@@ -1,10 +1,6 @@
 # Powerful Python Project
 
-### API Server
+### Develop a API Server
 
 #### Tuesday
 - create the foundation, virtual env, git branch
-```bash
-git commit -m "first commit" && git push https://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@github.com/greyshell/project_api_server.git
-
-```
