@@ -1,12 +1,38 @@
-from flask import Flask, make_response
+import json
+
+from flask import Flask, make_response, request
 
 app = Flask(__name__)  # __name__ is used by convention, any string can be used
 
+#
+MEMORY = {}
 
-@app.route("/tasks/")  # a method that returns a decorator
+
+@app.route("/tasks/", methods=["GET"])  # a method that returns a decorator
 def get_all_tasks():
-    # return json response
     return make_response("[]", 200)  # returns a user defined status code
+
+
+@app.route("/tasks/", methods=["POST"])  # a method that returns a decorator
+def create_task():
+    payload = request.get_json(force=True)  # request.data.decode("utf-8")
+    task_id = 1
+    MEMORY["task_id"] = {
+        "summary": payload["summary"],
+        "description": payload["description"]
+    }
+    task_info = {
+        "id": task_id
+    }
+    return make_response(json.dumps(task_info), 201)
+
+
+@app.route("/tasks/<int:task_id>/", methods=["GET"])  # a method that returns a decorator
+def task_details(task_id):
+    task_info = MEMORY["task_id"].copy()
+    task_info["id"] = task_id
+
+    return make_response(json.dumps(task_info), 200)  # returns a user defined status code
 
 
 if __name__ == "__main__":
