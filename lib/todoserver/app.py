@@ -1,6 +1,10 @@
 import json
 
-from flask import Flask, make_response, request
+from flask import (
+    Flask,
+    make_response,
+    request,
+)
 
 app = Flask(__name__)  # __name__ is used by convention, any string can be used
 
