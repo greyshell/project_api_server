@@ -1,7 +1,7 @@
 # test_todoserver.py
 import unittest
 import json
-from lib.todoserver import app
+from lib import app
 
 class TestTodoserver(unittest.TestCase):
     def test_get_empty_list_of_tasks(self):

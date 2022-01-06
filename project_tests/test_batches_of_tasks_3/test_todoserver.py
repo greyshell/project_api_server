@@ -1,7 +1,7 @@
 # test_todoserver.py
 import unittest
 import json
-from lib.todoserver import app, MEMORY
+from lib import app, MEMORY
 app.testing = True
 
 def json_body(resp):
