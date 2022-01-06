@@ -1,16 +1,15 @@
 # test_todoserver.py
 import unittest
 import json
-from todoserver import app
+from lib.todoserver import app, MEMORY
 app.testing = True
-app.init_db("sqlite:///:memory:")
 
 def json_body(resp):
     return json.loads(resp.data.decode("utf-8"))
 
 class TestTodoserver(unittest.TestCase):
     def setUp(self):
-        app.erase_all_test_data()
+        MEMORY.clear()
         self.client = app.test_client()
         # verify test pre-conditions
         resp = self.client.get("/tasks/")
@@ -60,3 +59,4 @@ class TestTodoserver(unittest.TestCase):
         self.assertEqual(200, resp.status_code)
         checked_tasks = json_body(resp)
         self.assertEqual(3, len(checked_tasks))
+

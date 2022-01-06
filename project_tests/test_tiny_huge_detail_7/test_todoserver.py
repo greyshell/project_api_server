@@ -1,7 +1,7 @@
 # test_todoserver.py
 import unittest
 import json
-from todoserver import app
+from lib.todoserver import app
 app.testing = True
 app.init_db("sqlite:///:memory:")
 

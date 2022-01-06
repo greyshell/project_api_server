@@ -1,6 +1,6 @@
 import unittest
 import json
-from todoserver import app, MEMORY
+from lib.todoserver import app, MEMORY
 
 # enable more debugging info
 app.testing = True

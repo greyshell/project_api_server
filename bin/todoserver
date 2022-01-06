@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+
+# creating executable script
+# set python path from top level directory: export PYTHONPATH=$(pwd)/lib
+
+from todoserver import app
+
+if __name__ == "__main__":
+    app.run()

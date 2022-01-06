@@ -1,8 +1,9 @@
 # test_todoserver.py
 import unittest
 import json
-from todoserver import app
+from lib.todoserver import app
 app.testing = True
+app.init_db("sqlite:///:memory:")
 
 def json_body(resp):
     return json.loads(resp.data.decode("utf-8"))
