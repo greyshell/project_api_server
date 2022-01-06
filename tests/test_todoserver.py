@@ -1,9 +1,9 @@
 import unittest
 import json
-from lib import app, MEMORY
+from lib.todoserver import app, MEMORY
 
 # enable more debugging info
-app.testing = True
+app.testing = True  # disable in production
 
 
 def json_body(resp):
