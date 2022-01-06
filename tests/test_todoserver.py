@@ -1,6 +1,6 @@
 import unittest
 import json
-from lib.todoserver import app, MEMORY
+from lib.todoserver import app
 
 # enable more debugging info
 app.testing = True  # disable in production
@@ -13,7 +13,7 @@ def json_body(resp):
 class TestTodoserver(unittest.TestCase):
 
     def setUp(self):
-        MEMORY.clear()
+        app.store.clear()
         self.client = app.test_client()
         # verify the test pre-condition
         resp = self.client.get("/tasks/")  # mapped -> @app.route("/tasks/")

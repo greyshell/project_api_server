@@ -1,1 +1,1 @@
-from .app import app, MEMORY
+from .app import app
