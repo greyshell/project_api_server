@@ -6,7 +6,7 @@ from flask import (
     request,
 )
 
-from .store import TaskStore
+from .fake_datastore import TaskStore
 
 
 class TodoserverApp(Flask):
