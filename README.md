@@ -9,7 +9,7 @@
 4. Creating & Fetching A Task => done
 5. Batches of Tasks => done
 6. Application Structure: Refactoring & Organizing => done
-7. Using the Database
+7. Using the Database => done
 8. Fleshing out the API
 9. Writing A Decorator: A Tiny Huge Detail
 10. The Final Executable

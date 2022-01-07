@@ -4,6 +4,7 @@ from lib.todoserver import app
 
 # enable more debugging info
 app.testing = True  # disable in production
+app.init_db("sqlite:///:memory:")
 
 
 def json_body(resp):

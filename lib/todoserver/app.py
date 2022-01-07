@@ -6,17 +6,16 @@ from flask import (
     request,
 )
 
-from .fake_datastore import TaskStore
+from .store import TaskStore
 
 
 class TodoserverApp(Flask):
-    def __init__(self, name):
-        self.store = TaskStore()
-        super().__init__(name)
+    def init_db(self, engine_spec):
+        self.store = TaskStore(engine_spec)
 
     def erase_all_test_data(self):
         assert self.testing  # if app.testing is True then execute the  next line
-        self.store.tasks.clear()
+        self.store._delete_all_tasks()  # internal only
 
 
 app = TodoserverApp(__name__)  # __name__ is used by convention, any string can be used
