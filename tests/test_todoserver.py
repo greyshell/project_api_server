@@ -23,11 +23,6 @@ class TestTodoserver(unittest.TestCase):
         self.assertEqual([], json_body(resp))
 
     def test_create_a_task_and_get_its_details(self):
-        self.client = app.test_client()
-        # verify the test pre-condition
-        resp = self.client.get("/tasks/")  # mapped -> @app.route("/tasks/")
-        self.assertEqual([], json_body(resp))
-
         # create a new task
         new_task_data = {
             "summary": "Get milk",
@@ -67,6 +62,83 @@ class TestTodoserver(unittest.TestCase):
         checked_tasks = json_body(resp)
         self.assertEqual(3, len(checked_tasks))
 
+    def test_delete_task(self):
+        # create a new task
+        new_task_data = {
+            "summary": "Get milk",
+            "description": "One gallon organic whole milk"
+        }
+        resp = self.client.post("/tasks/",
+                                data=json.dumps(new_task_data))
+        self.assertEqual(201, resp.status_code)
+
+        # get the task details
+        task_id = json_body(resp)["id"]
+        # delete the task
+        resp = self.client.delete("/tasks/{:d}/".format(task_id))  # :d -> type assertion
+        self.assertEqual(200, resp.status_code)
+
+        # verify the task is really gone
+        resp = self.client.get("/tasks/{:d}/".format(task_id))
+        self.assertEqual(404, resp.status_code)
+
     def test_error_when_getting_nonexisting_task(self):
         resp = self.client.get("/tasks/42/")
         self.assertEqual(404, resp.status_code)
+
+    def test_error_when_deleting_nonexisting_task(self):
+        resp = self.client.delete("/tasks/42/")
+        self.assertEqual(404, resp.status_code)
+
+    # def test_error_when_updating_nonexisting_task(self):
+    #     data = {
+    #         "summary": "",
+    #         "description": "",
+    #     }
+    #     resp = self.client.put("/tasks/42/",
+    #                            data = json.dumps(data))
+    #     self.assertEqual(404, resp.status_code)
+
+    # def test_error_when_creating_task_with_bad_summary(self):
+    #     bad_summaries = [
+    #         "x" * 120,
+    #         "foo\nbar"
+    #     ]
+    #     for bad_summary in bad_summaries:
+    #         with self.subTest(bad_summary=bad_summary):
+    #
+    #             task_info = {
+    #                 "summary": bad_summary,
+    #                 "description": "",
+    #             }
+    #             resp = self.client.post("/tasks/",
+    #                                     data = json.dumps(task_info))
+    #             self.assertEqual(400, resp.status_code)
+    #             result = json_body(resp)
+    #             self.assertIn("error", result)
+    #             self.assertEqual(
+    #                 "Summary must be under 120 chars, without newlines",
+    #                 result["error"])
+    #
+    # def test_error_when_updating_task_with_bad_summary(self):
+    #     # create test task
+    #     task_id = self.create_test_task()["id"]
+    #     bad_summaries = [
+    #         "x" * 120,
+    #         "foo\nbar"
+    #     ]
+    #     for bad_summary in bad_summaries:
+    #         with self.subTest(bad_summary=bad_summary):
+    #
+    #             task_info = {
+    #                 "summary": bad_summary,
+    #                 "description": "",
+    #             }
+    #             resp = self.client.put("/tasks/{:d}/".format(task_id),
+    #                                     data = json.dumps(task_info))
+    #             self.assertEqual(400, resp.status_code)
+    #             result = json_body(resp)
+    #             self.assertIn("error", result)
+    #             self.assertEqual(
+    #                 "Summary must be under 120 chars, without newlines",
+    #                 result["error"])

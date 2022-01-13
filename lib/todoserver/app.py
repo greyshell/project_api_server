@@ -46,3 +46,11 @@ def task_details(task_id):
     if task_info is None:
         return make_response("", 404)
     return make_response(json.dumps(task_info), 200)  # returns a user defined status code
+
+
+@app.route("/tasks/<int:task_id>/", methods=["DELETE"])
+def delete_task(task_id):
+    deleted = app.store.delete_task(task_id)
+    if deleted:
+        return make_response("", 200)
+    return make_response("", 404)
