@@ -76,6 +76,8 @@ class TaskStore:
         return deleted
 
     def modify_task(self, task_id, summary, description):
+        if len(summary) > MAX_SUMMARY_LENGTH or "\n" in summary:
+            raise BadSummaryError
         session = self.Session()
         task = session.query(Task).get(task_id)
         if task is None:
