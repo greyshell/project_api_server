@@ -24,6 +24,11 @@ class Task(Base):
     description = Column(String)
 
 
+def validate_summary(summary):
+    if len(summary) > MAX_SUMMARY_LENGTH or "\n" in summary:
+        raise BadSummaryError
+
+
 class TaskStore:
     def __init__(self, engine_spec):
         # in memory database
@@ -38,8 +43,7 @@ class TaskStore:
         ]
 
     def create_tasks(self, summary, description):
-        if len(summary) > MAX_SUMMARY_LENGTH or "\n" in summary:
-            raise BadSummaryError
+        validate_summary(summary)
         session = self.Session()
         task = Task(
             summary=summary,
@@ -76,8 +80,7 @@ class TaskStore:
         return deleted
 
     def modify_task(self, task_id, summary, description):
-        if len(summary) > MAX_SUMMARY_LENGTH or "\n" in summary:
-            raise BadSummaryError
+        validate_summary(summary)
         session = self.Session()
         task = session.query(Task).get(task_id)
         if task is None:

@@ -41,7 +41,7 @@ def create_task():
         result = {
             "error": "Summary must be under 120 chars, without newlines"
         }
-        return make_response(result, 400)
+        return make_response(json.dumps(result), 400)
 
     task_info = {"id": task_id}
     return make_response(json.dumps(task_info), 201)
@@ -75,7 +75,7 @@ def modify_task(task_id):
         result = {
             "error": "Summary must be under 120 chars, without newlines"
         }
-        return make_response(result, 400)
+        return make_response(json.dumps(result), 400)
     if modified:
         return ""
     return make_response("", 404)
