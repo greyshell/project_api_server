@@ -43,13 +43,15 @@ class TaskStore:
 
     def task_details(self, task_id):
         task = self.Session().query(Task).get(task_id)
+        if task is None:
+            return None
         return {
             "id": task.id,
             "summary": task.summary,
             "description": task.description
         }
 
-    def _delete_all_tasks(self):
+    def delete_all_tasks(self):
         session = self.Session()
         session.query(Task).delete()
         session.commit()

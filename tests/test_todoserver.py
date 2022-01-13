@@ -1,6 +1,7 @@
 import unittest
 import json
-from lib.todoserver import app
+from todoserver import app
+# echo $PYTHONPATH = /Users/abhijitsinha/Documents/project_api_server/lib
 
 # enable more debugging info
 app.testing = True  # disable in production
@@ -66,3 +67,6 @@ class TestTodoserver(unittest.TestCase):
         checked_tasks = json_body(resp)
         self.assertEqual(3, len(checked_tasks))
 
+    def test_error_when_getting_nonexisting_task(self):
+        resp = self.client.get("/tasks/42/")
+        self.assertEqual(404, resp.status_code)
