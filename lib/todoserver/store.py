@@ -10,6 +10,12 @@ from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
 
+MAX_SUMMARY_LENGTH = 119
+
+
+class BadSummaryError(Exception):
+    pass
+
 
 class Task(Base):
     __tablename__ = "tasks"
@@ -32,6 +38,8 @@ class TaskStore:
         ]
 
     def create_tasks(self, summary, description):
+        if len(summary) > MAX_SUMMARY_LENGTH or "\n" in summary:
+            raise BadSummaryError
         session = self.Session()
         task = Task(
             summary=summary,
